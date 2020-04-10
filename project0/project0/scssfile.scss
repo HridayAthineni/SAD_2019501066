@@ -1,0 +1,18 @@
+$bgcolor : red;
+
+h1 {
+	color : $bgcolor;
+}
+
+div {
+	
+	font-family : "Times New Roman", Arial
+	h2 {
+		color : $bgcolor
+	}
+
+	p {
+		background-color : lightblue;
+	}
+}
+
