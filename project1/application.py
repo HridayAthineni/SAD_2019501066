@@ -31,7 +31,5 @@ def signup():
 		return render_template("Registration.html")
 	else:
 		name = request.form.get("UserName")
-		print(request.form)
-		print(name)
-
-	return render_template("result.html", name = name)
+		msg = "Hello " + name +", Your account was successfully registered"
+	return render_template("Registration.html", name = msg)
