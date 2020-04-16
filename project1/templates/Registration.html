@@ -2,40 +2,81 @@
 <html>
 	<head>
 		<title>Registration</title>
-		<link rel="stylesheet" href="Style.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="stylesheet" href="D:\First Year\SAD_2019501066\project1\templates\Style.css">
+
+		<style type="text/css">
+			h1 {
+					text-align: center;
+					padding: 50px
+				}
+			body{
+				background-color: #EFE6E9;
+
+			}
+
+			form {
+				position: absolute;
+				left :35%;
+				background-color: teal;
+				padding: 70px;
+			}
+
+			input {
+				padding-right: 100px;
+			}
+
+			button {
+				position: absolute;
+				top : 89%;
+				left :46%;
+				background-color: #DAFCFD;
+			}
+
+			button:hover {
+				color: red;
+			}
+			 
+
+					</style>
 	</head>
 	<body>
 		<h1>Registration Form</h1>
 
-		<form>
-			<label>User Name:</label> <br>
-			<input type="text" name="User name" required> <br><br>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<form action="" method='POST'>
+						<label>User Name:</label> <br>
+						<input type="text" name="UserName" required> <br><br>
 
-			<label>Password:</label> <br>
-			<input type="password" name="Password" required>  <br><br>
+						<label >Password:</label> <br>
+						<input type="password" name="Password" required>  <br><br>
 
-			<label>Email id:</label> <br>
-			<input type="Email" name="Email" required>  <br><br>
+						<label>Email id:</label> <br>
+						<input type="Email" name="Email" required>  <br><br>
 
-			<label>Mobile No:</label> <br>
-			<input type="tel" name="Mobile No" required>  <br><br>
 
-			<label>Gender:</label> <br>
-			<select id = "gender" >
-				<option>Male</option>
-				<option>Female</option>
-				<option>Others</option>
-			</select> <br><br>
+						<label>Gender:</label> <br>
+						<select id = "gender">
+							<option>Male</option>
+							<option>Female</option>
+							<option>Others</option>
+						</select> <br><br>
 
-			<label>Date of birth:</label> <br>
-			<input type="Date" name="dare-of-birth" required> <br><br>
+						<label>Date of birth:</label> <br>
+						<input type="Date" name="date-of-birth" required> <br>
+						<br>
 
-			<label>Address:</label> <br>
-			<input type="Address" name="Address" required> <br><br>
+						<input type="submit" name="submit" value="submit">
+					</form>
 
-			<button>Register</button>
+				</div>
+				
+			</div>
+			
+		</div>
 
-		</form>
 
 
 	</body>

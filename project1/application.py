@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, session, render_template
+from flask import Flask, session, render_template, request
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -20,7 +20,18 @@ Session(app)
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
-
+ 
 @app.route("/")
 def index():
-    return render_template("Registration.html")
+    return "TODO"
+
+@app.route("/register", methods = ['POST','GET'])
+def signup():
+	if request.method == 'GET':
+		return render_template("Registration.html")
+	else:
+		name = request.form.get("UserName")
+		print(request.form)
+		print(name)
+
+	return render_template("result.html", name = name)
