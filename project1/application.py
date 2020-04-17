@@ -5,6 +5,8 @@ from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
+from user_db import *
+
 app = Flask(__name__)
 
 # Check for environment variable
@@ -31,5 +33,15 @@ def signup():
 		return render_template("Registration.html")
 	else:
 		name = request.form.get("UserName")
+		password = request.form.get("Password")
+		email = request.form.get("Email")
+		# gender = request.form.get("gender")
+		gender = "Male"
+		dob = request.form.get("date-of-birth")
+
+		user1 = user(name, password, email, gender, dob)
+		db.add(user1)
+		db.commit()
+
 		msg = "Hello " + name +", Your account was successfully registered"
 	return render_template("Registration.html", name = msg)
