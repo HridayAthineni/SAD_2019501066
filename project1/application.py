@@ -22,7 +22,7 @@ Session(app)
 # Set up database
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
-
+# session = db()
  
 @app.route("/")
 def index():
@@ -45,3 +45,10 @@ def signup():
 
 		msg = "Hello " + name +", Your account was successfully registered"
 	return render_template("Registration.html", name = msg)
+
+@app.route("/admin")
+def all_users():
+	obj_list = db.query(user).all()
+	for obj in obj_list:
+		print(obj.timestamp)
+	return render_template("admin.html", obj_list = obj_list)
