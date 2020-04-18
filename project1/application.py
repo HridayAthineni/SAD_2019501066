@@ -1,4 +1,5 @@
 import os
+import datetime
 
 from flask import Flask, session, render_template, request
 from flask_session import Session
@@ -35,11 +36,10 @@ def signup():
 		name = request.form.get("UserName")
 		password = request.form.get("Password")
 		email = request.form.get("Email")
-		# gender = request.form.get("gender")
-		gender = "Male"
 		dob = request.form.get("date-of-birth")
+		timestamp = datetime.datetime.now()
 
-		user1 = user(name, password, email, gender, dob)
+		user1 = user(name, password, email, dob, timestamp)
 		db.add(user1)
 		db.commit()
 
