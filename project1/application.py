@@ -1,7 +1,7 @@
 import os
 import datetime
 
-from flask import Flask, session, render_template, request
+from flask import Flask, session, render_template, request, redirect
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -22,7 +22,6 @@ Session(app)
 # Set up database
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
-# session = db()
  
 @app.route("/")
 def index():
@@ -49,6 +48,26 @@ def signup():
 @app.route("/admin")
 def all_users():
 	obj_list = db.query(user).all()
-	for obj in obj_list:
-		print(obj.timestamp)
 	return render_template("admin.html", obj_list = obj_list)
+
+@app.route("/auth", methods = ['POST'])
+def login():
+		name = request.form.get("UserName")
+		password = request.form.get("Password")
+		session["name"] = name
+		user_obj = db.query(user).get(name)
+		error_msg = "Please enter valid details"
+
+		if user_obj == None:
+			return render_template("Registration.html", name = error_msg)
+
+		elif (name == user_obj.UserName) and (password == user_obj.Password):
+		 	return render_template("home.html")
+		else:
+		 	return render_template("Registration.html", name = error_msg)
+
+
+@app.route("/logout",methods = ["GET"])
+def logout():
+    session.clear()
+    return redirect("/register")
