@@ -25,46 +25,62 @@ db = scoped_session(sessionmaker(bind=engine))
  
 @app.route("/")
 def index():
-    return "TODO"
+    if session.get("name") is not None:
+        name = session.get("name") 
+        return render_template("home.html", name = name)
+    else:
+        return redirect("/register")
 
 @app.route("/register", methods = ['POST','GET'])
 def signup():
-	if request.method == 'GET':
-		return render_template("Registration.html")
-	else:
-		name = request.form.get("UserName")
-		password = request.form.get("Password")
-		email = request.form.get("Email")
-		dob = request.form.get("date-of-birth")
-		timestamp = datetime.datetime.now()
+    
+    if session.get("name") is not None:
+        name = session.get("name") 
+        return render_template("home.html", name = name)
+    if request.method == 'GET':
+        return render_template("Registration.html")
+    else:
+        name = request.form.get("UserName")
+        password = request.form.get("Password")
+        email = request.form.get("Email")
+        dob = request.form.get("date-of-birth")
+        timestamp = datetime.datetime.now()
+        user1 = user(name, password, email, dob, timestamp)
+        try:
+            db.add(user1)
+            db.commit()
 
-		user1 = user(name, password, email, dob, timestamp)
-		db.add(user1)
-		db.commit()
-
-		msg = "Hello " + name +", Your account was successfully registered"
-	return render_template("Registration.html", name = msg)
-
+            msg = "Hello " + name +", Your account was successfully registered"
+            return render_template("Registration.html", name = msg)
+        except:
+            return render_template("Registration.html", name = "User already exists")
 @app.route("/admin")
 def all_users():
-	obj_list = db.query(user).all()
-	return render_template("admin.html", obj_list = obj_list)
+    obj_list = db.query(user).all()
+    return render_template("admin.html", obj_list = obj_list)
 
-@app.route("/auth", methods = ['POST'])
+@app.route("/auth", methods = ['POST',"GET"])
 def login():
-		name = request.form.get("UserName")
-		password = request.form.get("Password")
-		session["name"] = name
-		user_obj = db.query(user).get(name)
-		error_msg = "Please enter valid details"
+        if request.method == "GET" and session.get("name") is not None:
+            name = session.get("name") 
+            return render_template("home.html", name = name)
+        elif request.method == "GET":
+            msg = "Please login first"
+            return render_template("Registration.html", name = msg)
+        else:
+            name = request.form.get("UserName")
+            password = request.form.get("Password")
+            session["name"] = name
+            user_obj = db.query(user).get(name)
+            error_msg = "Please enter valid details"
 
-		if user_obj == None:
-			return render_template("Registration.html", name = error_msg)
+            if user_obj == None:
+                return render_template("Registration.html", name = error_msg)
 
-		elif (name == user_obj.UserName) and (password == user_obj.Password):
-		 	return render_template("home.html")
-		else:
-		 	return render_template("Registration.html", name = error_msg)
+            elif (name == user_obj.UserName) and (password == user_obj.Password):
+                return render_template("home.html", name = name)
+            else:
+                return render_template("Registration.html", name = error_msg)
 
 
 @app.route("/logout",methods = ["GET"])
