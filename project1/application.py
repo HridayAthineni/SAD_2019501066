@@ -1,9 +1,12 @@
 import os
+import datetime
 
 from flask import Flask, session, render_template, request
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+
+from user_db import *
 
 app = Flask(__name__)
 
@@ -19,7 +22,7 @@ Session(app)
 # Set up database
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
-
+# session = db()
  
 @app.route("/")
 def index():
@@ -31,7 +34,21 @@ def signup():
 		return render_template("Registration.html")
 	else:
 		name = request.form.get("UserName")
-		print(request.form)
-		print(name)
+		password = request.form.get("Password")
+		email = request.form.get("Email")
+		dob = request.form.get("date-of-birth")
+		timestamp = datetime.datetime.now()
 
-	return render_template("result.html", name = name)
+		user1 = user(name, password, email, dob, timestamp)
+		db.add(user1)
+		db.commit()
+
+		msg = "Hello " + name +", Your account was successfully registered"
+	return render_template("Registration.html", name = msg)
+
+@app.route("/admin")
+def all_users():
+	obj_list = db.query(user).all()
+	for obj in obj_list:
+		print(obj.timestamp)
+	return render_template("admin.html", obj_list = obj_list)

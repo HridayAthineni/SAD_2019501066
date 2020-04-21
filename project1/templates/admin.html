@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Admin</title>
+        <link rel="stylesheet" href="{{ url_for('static',filename='Style.css') }}">
+
+    </head>
+    <body>
+        <h1>Details of all users</h1>
+
+        <table border="2px", align="center">
+            <tr>
+                <th>User Name</th>
+                <th>Password</th>
+                <th>Creation Timestamp</th>
+            </tr>
+            
+{% for obj in obj_list %}
+                    <tr>
+                        <td>{{obj.UserName}}</td>
+                        <td>{{obj.Password}}</td>
+                        <td>{{obj.timestamp}}</td>
+                    </tr>
+{% endfor %}
+        </table>
+        </div>
+
+    </body>
+</html>
