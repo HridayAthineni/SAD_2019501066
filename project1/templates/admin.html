@@ -2,28 +2,38 @@
 <html>
     <head>
         <title>Admin</title>
-        <link rel="stylesheet" href="{{ url_for('static',filename='Style.css') }}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+                <link rel="stylesheet" href="{{ url_for('static',filename='Style.css') }}">
 
     </head>
     <body>
-        <h1>Details of all users</h1>
+        <h1 align="center">Details of all users</h1>
 
-        <table border="2px", align="center">
+
+        <table class="table">
+          <thead>
             <tr>
-                <th>User Name</th>
-                <th>Password</th>
-                <th>Creation Timestamp</th>
+              <th scope="col">User Name</th>
+              <th scope="col">Password</th>
+              <th scope="col">Creation Timestamp</th>
             </tr>
-            
-{% for obj in obj_list %}
-                    <tr>
-                        <td>{{obj.UserName}}</td>
-                        <td>{{obj.Password}}</td>
-                        <td>{{obj.timestamp}}</td>
-                    </tr>
-{% endfor %}
+          </thead>
+          <tbody>
+        {% for obj in obj_list %}
+                            <tr>
+                                <td>{{obj.UserName}}</td>
+                                <td>{{obj.Password}}</td>
+                                <td>{{obj.timestamp}}</td>
+                            </tr>
+        {% endfor %}  </tbody>
         </table>
-        </div>
+
 
     </body>
 </html>
+
+
+
+
+
+
